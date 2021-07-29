@@ -9,7 +9,7 @@ private:
 	Node<Data>* head;
 
 public:
-	LinkedList(Node<Data>* head);
+	LinkedList();
 
 	Node<Data>* getHead();
 

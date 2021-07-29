@@ -1,7 +1,8 @@
+#include "pch.h"
 #include "LinkedList.h"
 
 template <typename Data>
-LinkedList<Data>::LinkedList(Node<Data>* head) : head(head)
+LinkedList<Data>::LinkedList()
 {
 	head = new Node<Data>{};
 	Node<Data> tail{};
