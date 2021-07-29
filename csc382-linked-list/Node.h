@@ -1,4 +1,5 @@
 #pragma once
+#include "pch.h"
 
 template <typename Data>
 class Node

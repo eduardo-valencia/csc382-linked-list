@@ -1,7 +1,6 @@
 #pragma once
 #include "Node.h"
 
-
 template <typename Data>
 class LinkedList
 {

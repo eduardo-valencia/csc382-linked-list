@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "Node.h"
 #include "LinkedList.h"
 
 template <typename Data>
@@ -12,7 +13,7 @@ LinkedList<Data>::LinkedList()
 template <typename Data>
 Node<Data>* LinkedList<Data>::getHead()
 {
-	return head;
+	return nullptr;
 }
 
 template <typename Data>
