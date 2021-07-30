@@ -87,6 +87,7 @@ Node<Data>* LinkedList<Data>::find(Data* data)
 template <typename Data>
 void LinkedList<Data>::insert(Data* data)
 {
+	// This could break everything
 	Node<Data> nodeWithData{ data };
 	Node<Data>* lastNode = tail->getPrevious();
 	lastNode->linkToNode(&nodeWithData);
@@ -115,6 +116,7 @@ struct LinkedListTest : testing::Test
 		for (vector<int>::iterator currentInt = newNodeData.begin(); currentInt != newNodeData.end(); ++currentInt)
 		{
 			linkedList->insert(&*currentInt);
+
 		}
 	}
 
@@ -134,6 +136,13 @@ struct LinkedListTest : testing::Test
 		}
 		return length;
 	}
+
+	void testDataFound(int* data)
+	{
+		Node<int>* foundNode = linkedList->find(data);
+		EXPECT_TRUE(foundNode != nullptr);
+		EXPECT_EQ(*foundNode->getData(), *data);
+	}
 };
 
 vector<int> testData{ 1, 2, 3 };
@@ -145,19 +154,50 @@ struct FindTest : LinkedListTest
 
 	}
 
-	void testDataFound(int* data)
-	{
-		Node<int>* foundNode = linkedList->find(data);
-		EXPECT_TRUE(foundNode != nullptr);
-		//EXPECT_EQ(*foundNode->getData(), *data);
-	}
-
 	void testDataNotFound(int* data)
 	{
 		Node<int>* foundNode = linkedList->find(data);
 		EXPECT_EQ(foundNode, nullptr);
 	}
 };
+
+struct InsertionTest : LinkedListTest
+{
+	InsertionTest() : LinkedListTest(testData)
+	{
+
+	}
+
+	void testLength()
+	{
+		int length = getLength();
+		EXPECT_EQ(length, testData.size() + 1);
+	}
+
+	void testItemWasInserted(int data)
+	{
+		testDataFound(&data);
+		testLength();
+	}
+};
+
+TEST(Nodes, ShouldLinkToNextNode)
+{
+	int node1Data = 1;
+	int node2Data = 2;
+	Node<int> node1{ &node1Data };
+	Node<int> node2{ &node2Data };
+	node1.linkToNode(&node2);
+	EXPECT_EQ(node1.getNext(), &node2);
+	EXPECT_EQ(node2.getPrevious(), &node1);
+}
+
+TEST_F(InsertionTest, InsertsItem)
+{
+	int newItem = 100;
+	linkedList->insert(&newItem);
+	testItemWasInserted(newItem);
+}
 
 TEST_F(FindTest, FindsDataAndReturnsNode)
 {
