@@ -1,6 +1,9 @@
 #include "pch.h"
 #include <gtest/gtest.h>
+#include "algorithm"
 #include "../csc382-linked-list-2/LinkedList.h"
+
+using namespace std;
 
 template <typename Data>
 Node<Data>::Node(Data* data) : data{ data }, next{ nullptr }, previous{ nullptr }
@@ -107,6 +110,7 @@ void LinkedList<Data>::Delete(Node<Data>* node)
 struct LinkedListTest : testing::Test
 {
 	LinkedList<int>* linkedList;
+	vector<int>& nodeData;
 
 	LinkedListTest()
 	{
@@ -117,10 +121,46 @@ struct LinkedListTest : testing::Test
 	{
 		delete linkedList;
 	}
+
+	int getLength()
+	{
+		int length = 0;
+		Node<int>* currentNode = linkedList->getHead();
+		while (currentNode->getNext() != nullptr)
+		{
+			currentNode = currentNode->getNext();
+			++length;
+		}
+		return length;
+	}
 };
 
-TEST_F(LinkedListTest, HasHead)
+struct FindTest : LinkedListTest
 {
-	Node<int>* head = linkedList->getHead();
-	EXPECT_TRUE(head != nullptr);
+	void testDataFound(int* data)
+	{
+		Node<int>* foundNode = linkedList->find(data);
+		EXPECT_TRUE(foundNode != nullptr);
+		EXPECT_EQ(*foundNode->getData(), *data);
+	}
+
+	void testDataNotFound(int* data)
+	{
+		Node<int>* foundNode = linkedList->find(data);
+		EXPECT_EQ(foundNode, nullptr);
+	}
+};
+
+TEST_F(FindTest, FindsDataAndReturnsNode)
+{
+	nodeData = vector<int>{ 1, 2, 3 };
+	testDataFound(&nodeData[1]);
 }
+
+//TEST_F(LinkedListTest, HasHead)
+//{
+//	Node<int>* head = linkedList->getHead();
+//	EXPECT_TRUE(head != nullptr);
+//}
+
+//struct 
