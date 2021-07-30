@@ -139,12 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\csc382-linked-list\LinkedList.h" />
-    <ClInclude Include="..\csc382-linked-list\Node.h" />
+    <ClInclude Include="LinkedList.h" />
+    <ClInclude Include="Node.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\csc382-linked-list\LinkedList.cpp" />
-    <ClCompile Include="..\csc382-linked-list\Node.cpp" />
+    <ClCompile Include="LinkedList.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Node.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

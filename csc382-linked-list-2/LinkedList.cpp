@@ -38,7 +38,7 @@ void LinkedList<Data>::insert(Data* data)
 	{
 		endOfList = endOfList->getNext();
 	}
-	Node<Data> nodeWithData{data};
+	Node<Data> nodeWithData{ data };
 	Node<Data>* lastNode = endOfList->getPrevious();
 	lastNode->linkToNode(nodeWithData);
 	nodeWithData.linkToNode(endOfList);
