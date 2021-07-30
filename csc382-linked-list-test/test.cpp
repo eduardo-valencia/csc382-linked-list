@@ -112,12 +112,10 @@ struct LinkedListTest : testing::Test
 	{
 		linkedList = new LinkedList<int>{};
 		vector<int>::iterator currentInt = newNodeData.begin();
-		while (currentInt != newNodeData.end())
+		for (vector<int>::iterator currentInt = newNodeData.begin(); currentInt != newNodeData.end(); ++currentInt)
 		{
-			++currentInt;
 			linkedList->insert(&*currentInt);
 		}
-
 	}
 
 	~LinkedListTest()
