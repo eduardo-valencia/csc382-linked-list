@@ -87,15 +87,10 @@ Node<Data>* LinkedList<Data>::find(Data* data)
 template <typename Data>
 void LinkedList<Data>::insert(Data* data)
 {
-	Node<Data>* endOfList = getHead();
-	while (endOfList->getNext() != nullptr)
-	{
-		endOfList = endOfList->getNext();
-	}
 	Node<Data> nodeWithData{ data };
-	Node<Data>* lastNode = endOfList->getPrevious();
+	Node<Data>* lastNode = tail->getPrevious();
 	lastNode->linkToNode(&nodeWithData);
-	nodeWithData.linkToNode(endOfList);
+	nodeWithData.linkToNode(tail);
 }
 
 template <typename Data>
@@ -122,6 +117,7 @@ struct LinkedListTest : testing::Test
 			++currentInt;
 			linkedList->insert(&*currentInt);
 		}
+
 	}
 
 	~LinkedListTest()
