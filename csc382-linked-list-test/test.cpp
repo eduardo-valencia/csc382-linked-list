@@ -376,9 +376,22 @@ void DynamicTest::startTest()
 //	}
 //};
 
+DynamicFindTest::DynamicFindTest() : DynamicTest("find test")
+{
+
+}
+
+void DynamicFindTest::testOperation()
+{
+	Node<string>* letterToFind = promptUserToFindItem();
+	showWhetherItemWasFound(letterToFind);
+}
+
 int main()
 {
 	/*TestDynamicTest testDynamicTest{};
 	testDynamicTest.startTest();*/
+	DynamicFindTest findTest{};
+	findTest.startTest();
 	return 0;
 }

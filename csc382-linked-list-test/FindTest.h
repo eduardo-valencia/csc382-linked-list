@@ -4,11 +4,10 @@
 
 using namespace std;
 
-class DynamicFindTest : DynamicTest
+class DynamicFindTest : public DynamicTest
 {
-	void testOperation()
-	{
-		Node<string>* letterToFind = promptUserToFindItem();
-		showWhetherItemWasFound(letterToFind);
-	}
+public:
+	DynamicFindTest();
+
+	void testOperation();
 };
