@@ -93,7 +93,7 @@ void LinkedList<Data>::Delete(Node<Data>* node)
 {
 	Node<Data>* previousNode = node->getPrevious();
 	Node<Data>* nextNode = node->getNext();
-	previousNode->next = new Node<Data>{ nextNode->getData() };
+	previousNode->next = nextNode;
 	previousNode->next->previous = previousNode;
 	delete node;
 }
