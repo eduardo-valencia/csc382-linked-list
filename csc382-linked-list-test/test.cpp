@@ -165,9 +165,16 @@ struct FindTest : LinkedListTest
 
 struct InsertionTest : LinkedListTest
 {
-	InsertionTest() : LinkedListTest(testData)
+	int itemToInsert;
+
+	InsertionTest() : LinkedListTest(testData), itemToInsert{ 100 }
 	{
 
+	}
+
+	void insertInteger()
+	{
+		linkedList->Insert(&itemToInsert);
 	}
 
 	void testLength()
@@ -205,12 +212,16 @@ struct DeletionTest : LinkedListTest
 	}
 };
 
-TEST_F(InsertionTest, InsertsItem)
+//TEST_F(InsertionTest, InsertsItem)
+//{
+//	
+//}
+
+TEST_F(InsertionTest, InsertsItemWhenNodesExist)
 {
 	insertNodeData();
-	int newItem = 100;
-	linkedList->Insert(&newItem);
-	testItemWasInserted(newItem);
+	insertInteger();
+	testItemWasInserted(itemToInsert);
 }
 
 TEST_F(FindTest, FindsDataAndReturnsNode)
