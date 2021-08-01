@@ -211,6 +211,17 @@ struct DeletionTest : LinkedListTest
 	}
 };
 
+struct DeletionTestWithExistingNodes : DeletionTest
+{
+	DeletionTestWithExistingNodes()
+	{
+		nodeData.push_back(1);
+		nodeData.push_back(2);
+		nodeData.push_back(3);
+		insertNodeData();
+	}
+};
+
 TEST_F(InsertionTest, InsertsItem)
 {
 	insertInteger();
@@ -232,14 +243,21 @@ TEST_F(FindTest, FindsDataAndReturnsNode)
 	testDataFound(&(nodeData[0]));
 }
 
-TEST_F(DeletionTest, DeletesItems)
+TEST_F(FindTest, ReturnsNullPointerWhenItemDoesNotExist)
 {
-	nodeData.push_back(1);
-	nodeData.push_back(2);
-	nodeData.push_back(3);
-	insertNodeData();
+	int numberToFind = 100;
+	testDataNotFound(&numberToFind);
+}
+
+TEST_F(DeletionTestWithExistingNodes, DeletesItems)
+{
 	Node<int>* nodeToDelete = linkedList->getHead()->getNext();
 	int nodeData = *nodeToDelete->getData();
 	linkedList->Delete(nodeToDelete);
 	testItemWasDeleted(&nodeData);
 }
+
+//TEST_F(DeletionTestWithExistingNodes, DoesNotDeleteAnythingWhenDataNotFound)
+//{
+//	Node<int>
+//}
