@@ -19,11 +19,11 @@ public:
 
 	Node* getPrevious();
 
-	void setPrevious(Node previous);
+	void setPrevious(Node* previous);
 
 	Node* getNext();
 
-	void setNext(Node next);
+	void setNext(Node* next);
 
-	void linkToNode(Node newNextNode);
+	void linkToNode(Node* newNextNode);
 };
