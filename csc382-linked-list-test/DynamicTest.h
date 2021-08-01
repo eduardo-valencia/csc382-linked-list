@@ -21,7 +21,7 @@ public:
 
 	void virtual testOperation();
 
-	bool promptUserToFindItem();
+	Node<string>* promptUserToFindItem();
 
 	static void startTest();
 };
