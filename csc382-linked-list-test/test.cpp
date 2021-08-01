@@ -201,17 +201,6 @@ struct DeletionTest : LinkedListTest
 	}
 };
 
-//TEST(Nodes, ShouldLinkToNextNode)
-//{
-//	int node1Data = 1;
-//	int node2Data = 2;
-//	Node<int> node1{ &node1Data };
-//	Node<int> node2{ &node2Data };
-//	node1.linkToNode(node2);
-//	EXPECT_EQ(node1.getNext(), &node2);
-//	EXPECT_EQ(node2.getPrevious(), &node1);
-//}
-
 TEST_F(InsertionTest, InsertsItem)
 {
 	int newItem = 100;
@@ -231,11 +220,3 @@ TEST_F(DeletionTest, DeletesItems)
 	linkedList->Delete(nodeToDelete);
 	testItemWasDeleted(&nodeData);
 }
-
-//TEST_F(LinkedListTest, HasHead)
-//{
-//	Node<int>* head = linkedList->getHead();
-//	EXPECT_TRUE(head != nullptr);
-//}
-
-//struct 
