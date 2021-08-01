@@ -107,17 +107,21 @@ struct LinkedListTest : testing::Test
 	LinkedListTest(vector<int>& newNodeData) : nodeData{newNodeData}
 	{
 		linkedList = new LinkedList<int>{};
-		vector<int>::iterator currentInt = newNodeData.begin();
-		for (vector<int>::iterator currentInt = newNodeData.begin(); currentInt != newNodeData.end(); ++currentInt)
-		{
-			linkedList->Insert(&*currentInt);
-
-		}
 	}
 
 	~LinkedListTest()
 	{
 		delete linkedList;
+	}
+
+	void insertNodeData()
+	{
+		vector<int>::iterator currentInt = nodeData.begin();
+		for (vector<int>::iterator currentInt = nodeData.begin(); currentInt != nodeData.end(); ++currentInt)
+		{
+			linkedList->Insert(&*currentInt);
+
+		}
 	}
 
 	int getLength()
@@ -203,6 +207,7 @@ struct DeletionTest : LinkedListTest
 
 TEST_F(InsertionTest, InsertsItem)
 {
+	insertNodeData();
 	int newItem = 100;
 	linkedList->Insert(&newItem);
 	testItemWasInserted(newItem);
@@ -210,11 +215,13 @@ TEST_F(InsertionTest, InsertsItem)
 
 TEST_F(FindTest, FindsDataAndReturnsNode)
 {
+	insertNodeData();
 	testDataFound(&(testData[1]));
 }
 
 TEST_F(DeletionTest, DeletesItems)
 {
+	insertNodeData();
 	Node<int>* nodeToDelete = linkedList->getHead()->getNext();
 	int nodeData = *nodeToDelete->getData();
 	linkedList->Delete(nodeToDelete);
