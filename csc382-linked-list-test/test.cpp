@@ -102,11 +102,12 @@ void LinkedList<Data>::Delete(Node<Data>* node)
 struct LinkedListTest : testing::Test
 {
 	LinkedList<int>* linkedList;
-	vector<int>& nodeData;
+	vector<int> nodeData;
 
-	LinkedListTest(vector<int>& newNodeData) : nodeData{newNodeData}
+	LinkedListTest()
 	{
 		linkedList = new LinkedList<int>{};
+		nodeData = vector<int>{};
 	}
 
 	~LinkedListTest()
@@ -147,11 +148,9 @@ struct LinkedListTest : testing::Test
 	}
 };
 
-vector<int> testData{ 1, 2, 3 };
-
 struct FindTest : LinkedListTest
 {
-	FindTest() : LinkedListTest(testData)
+	FindTest() : LinkedListTest()
 	{
 
 	}
@@ -167,7 +166,7 @@ struct InsertionTest : LinkedListTest
 {
 	int itemToInsert;
 
-	InsertionTest() : LinkedListTest(testData), itemToInsert{ 100 }
+	InsertionTest() : itemToInsert{ 100 }
 	{
 
 	}
@@ -180,7 +179,7 @@ struct InsertionTest : LinkedListTest
 	void testLength()
 	{
 		int length = getLength();
-		EXPECT_EQ(length, testData.size() + 1);
+		EXPECT_EQ(length, nodeData.size() + 1);
 	}
 
 	void testItemWasInserted(int data)
@@ -192,7 +191,7 @@ struct InsertionTest : LinkedListTest
 
 struct DeletionTest : LinkedListTest
 {
-	DeletionTest() : LinkedListTest(testData)
+	DeletionTest()
 	{
 
 	}
@@ -200,7 +199,7 @@ struct DeletionTest : LinkedListTest
 	void testLength()
 	{
 		int length = getLength();
-		EXPECT_EQ(length, testData.size() - 1);
+		EXPECT_EQ(length, nodeData.size() - 1);
 	}
 
 	void testItemWasDeleted(int* data)
@@ -212,13 +211,15 @@ struct DeletionTest : LinkedListTest
 	}
 };
 
-//TEST_F(InsertionTest, InsertsItem)
-//{
-//	
-//}
+TEST_F(InsertionTest, InsertsItem)
+{
+	insertInteger();
+	testItemWasInserted(itemToInsert);
+}
 
 TEST_F(InsertionTest, InsertsItemWhenNodesExist)
 {
+	nodeData.push_back(2);
 	insertNodeData();
 	insertInteger();
 	testItemWasInserted(itemToInsert);
@@ -226,12 +227,16 @@ TEST_F(InsertionTest, InsertsItemWhenNodesExist)
 
 TEST_F(FindTest, FindsDataAndReturnsNode)
 {
+	nodeData.push_back(2);
 	insertNodeData();
-	testDataFound(&(testData[1]));
+	testDataFound(&(nodeData[0]));
 }
 
 TEST_F(DeletionTest, DeletesItems)
 {
+	nodeData.push_back(1);
+	nodeData.push_back(2);
+	nodeData.push_back(3);
 	insertNodeData();
 	Node<int>* nodeToDelete = linkedList->getHead()->getNext();
 	int nodeData = *nodeToDelete->getData();
