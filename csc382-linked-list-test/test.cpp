@@ -304,3 +304,13 @@ TEST_F(DeletionTestWithExistingNodes, DeletesItems)
 	linkedList->Delete(nodeToDelete);
 	testItemWasDeleted(&nodeData);
 }
+
+class DynamicTest
+{
+private:
+	LinkedList<string> linkedList;
+	string name;
+
+public:
+	DynamicTest(string name) : name{ name }
+};
