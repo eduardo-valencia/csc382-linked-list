@@ -308,10 +308,13 @@ TEST_F(DeletionTestWithExistingNodes, DeletesItems)
 	testItemWasDeleted(&nodeData);
 }
 
+// Add dynamic test constructor.
+// Takes the test name and makes a linked list for testing
 DynamicTest::DynamicTest(string name) : name{ name }, linkedList{LinkedList<string>{""}}
 {
 }
 
+// Prompts the user and returns their answer
 string DynamicTest::prompt(string question)
 {
 	cout << question << endl;
@@ -320,6 +323,7 @@ string DynamicTest::prompt(string question)
 	return answer;
 }
 
+// Asks the user what letter they want to insert, then inserts it.
 void DynamicTest::promptUserToInsertDataItem(bool& shouldContinue)
 {
 	string itemToInsert = prompt("What letter do you want to insert?");
@@ -328,6 +332,8 @@ void DynamicTest::promptUserToInsertDataItem(bool& shouldContinue)
 	shouldContinue = shouldContinueAnswer == "yes";
 }
 
+// Asks the user what letters they want to insert.
+// Continues until they stop saying yes.
 void DynamicTest::promptUserToInsertData()
 {
 	bool shouldContinue = true;
@@ -337,12 +343,14 @@ void DynamicTest::promptUserToInsertData()
 	}
 }
 
+// Asks the user what letter they want to find, then returns the match
 Node<string>* DynamicTest::promptUserToFindItem()
 {
 	string letterToFind = prompt("Type in the letter to find.");
 	return linkedList.Find(&letterToFind);
 }
 
+// Shows whether the match was found, given a pointer.
 void DynamicTest::showWhetherItemWasFound(Node<string>* item)
 {
 	if (item == nullptr)
@@ -355,6 +363,7 @@ void DynamicTest::showWhetherItemWasFound(Node<string>* item)
 	}
 }
 
+// Says the name of the test, asks the user to insert data, and tests the operation.
 void DynamicTest::startTest()
 {
 	cout << "Beginning test " << name << endl;
@@ -362,22 +371,30 @@ void DynamicTest::startTest()
 	testOperation();
 }
 
-DynamicFindTest::DynamicFindTest() : DynamicTest("find")
+// Find test's constructor
+// The find test also acts as the insertion test because it reports whether the inserted items were found.
+// Sets the test name for find operation
+DynamicFindTest::DynamicFindTest() : DynamicTest("insertion and find")
 {
 
 }
 
+// Asks the user what letter they want to find, then shows whether it was found
 void DynamicFindTest::testOperation()
 {
 	Node<string>* letterToFind = promptUserToFindItem();
 	showWhetherItemWasFound(letterToFind);
 }
 
+// Sets deletion test name
 DynamicDeletionTest::DynamicDeletionTest() : DynamicTest("deletion")
 {
 
 }
 
+// Asks the user what letter they want to delete assuming they will enter one of the letters they inserted.
+// If they entered a valid letter, it will delete the item and report whether it was found after the deletion.
+// If it was not found after deletion, then it was successful.
 void DynamicDeletionTest::testOperation()
 {
 	string letterToDelete = prompt("What letter do you want to delete?");
@@ -392,6 +409,8 @@ void DynamicDeletionTest::testOperation()
 	showWhetherItemWasFound(match);
 }
 
+
+// Runs the dynamic tests.
 int main()
 {
 	DynamicFindTest findTest{};
