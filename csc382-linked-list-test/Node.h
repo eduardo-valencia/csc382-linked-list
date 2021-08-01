@@ -6,11 +6,11 @@ class Node
 private:
 	Data* data;
 
+public:
 	Node* previous;
 
 	Node* next;
 
-public:
 	Node(Data* data);
 
 	Data* getData();
@@ -24,6 +24,4 @@ public:
 	Node* getNext();
 
 	void setNext(Node* next);
-
-	void linkToNode(Node* newNextNode);
 };

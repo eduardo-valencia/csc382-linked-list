@@ -48,18 +48,12 @@ void Node<Data>::setPrevious(Node<Data>* newNode)
 }
 
 template <typename Data>
-void Node<Data>::linkToNode(Node<Data>* newNextNode)
-{
-	setNext(newNextNode);
-	newNextNode->setPrevious(this);
-}
-
-template <typename Data>
 LinkedList<Data>::LinkedList()
 {
 	head = new Node<Data>{ nullptr };
 	tail = new Node<Data>{ nullptr };
-	head->linkToNode(tail);
+	head->next = tail;
+	tail->previous = head;
 }
 
 template <typename Data>
@@ -87,11 +81,11 @@ Node<Data>* LinkedList<Data>::find(Data* data)
 template <typename Data>
 void LinkedList<Data>::insert(Data* data)
 {
-	// This could break everything
-	Node<Data> nodeWithData{ data };
 	Node<Data>* lastNode = tail->getPrevious();
-	lastNode->linkToNode(&nodeWithData);
-	nodeWithData.linkToNode(tail);
+	lastNode->next = new Node<Data>{ data };
+	lastNode->next->previous = lastNode;
+	lastNode->next->next = tail;
+	tail->previous = lastNode->next;
 }
 
 template <typename Data>
@@ -99,7 +93,8 @@ void LinkedList<Data>::Delete(Node<Data>* node)
 {
 	Node<Data>* previousNode = node->getPrevious();
 	Node<Data>* nextNode = node->getNext();
-	previousNode->linkToNode(nextNode);
+	previousNode->next = nextNode;
+	previousNode->next->previous = previousNode;
 	delete node;
 }
 
@@ -181,16 +176,16 @@ struct InsertionTest : LinkedListTest
 	}
 };
 
-TEST(Nodes, ShouldLinkToNextNode)
-{
-	int node1Data = 1;
-	int node2Data = 2;
-	Node<int> node1{ &node1Data };
-	Node<int> node2{ &node2Data };
-	node1.linkToNode(&node2);
-	EXPECT_EQ(node1.getNext(), &node2);
-	EXPECT_EQ(node2.getPrevious(), &node1);
-}
+//TEST(Nodes, ShouldLinkToNextNode)
+//{
+//	int node1Data = 1;
+//	int node2Data = 2;
+//	Node<int> node1{ &node1Data };
+//	Node<int> node2{ &node2Data };
+//	node1.linkToNode(node2);
+//	EXPECT_EQ(node1.getNext(), &node2);
+//	EXPECT_EQ(node2.getPrevious(), &node1);
+//}
 
 TEST_F(InsertionTest, InsertsItem)
 {
