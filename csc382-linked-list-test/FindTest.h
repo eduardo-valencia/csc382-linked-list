@@ -9,6 +9,6 @@ class FindTest : DynamicTest
 	void testOperation()
 	{
 		Node<string>* letterToFind = promptUserToFindItem();
-		showWhetherItemWasFound();
+		showWhetherItemWasFound(letterToFind);
 	}
 };

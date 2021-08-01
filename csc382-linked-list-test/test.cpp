@@ -15,7 +15,7 @@ using namespace std;
 // Node's constructor.
 // Takes a pointer to data and instantiates the data, next, and previous properties.
 template <typename Data>
-Node<Data>::Node(Data* data) : data{ data }, next{ nullptr }, previous{ nullptr }
+Node<Data>::Node(Data data) : data{ data }, next{ nullptr }, previous{ nullptr }
 {
 
 }
@@ -29,7 +29,7 @@ Data* Node<Data>::getData()
 
 // Sets the data using a pointer.
 template <typename Data>
-void Node<Data>::setData(Data* newData)
+void Node<Data>::setData(Data newData)
 {
 	data = newData;
 }
@@ -102,7 +102,7 @@ Node<Data>* LinkedList<Data>::Find(Data* data)
 // Inserts data, given a pointer to data.
 // Creates a new node for the data and adds it to the end of the list.
 template <typename Data>
-void LinkedList<Data>::Insert(Data* data)
+void LinkedList<Data>::Insert(Data data)
 {
 	Node<Data>* lastNode = tail->getPrevious();
 	lastNode->next = new Node<Data>{ data };
@@ -151,7 +151,7 @@ struct LinkedListTest : testing::Test
 		vector<int>::iterator currentInt = nodeData.begin();
 		for (vector<int>::iterator currentInt = nodeData.begin(); currentInt != nodeData.end(); ++currentInt)
 		{
-			linkedList->Insert(&*currentInt);
+			linkedList->Insert(*currentInt);
 
 		}
 	}
@@ -211,7 +211,7 @@ struct InsertionTest : LinkedListTest
 	// Inserts the default number to insert
 	void insertInteger()
 	{
-		linkedList->Insert(&itemToInsert);
+		linkedList->Insert(itemToInsert);
 	}
 
 	// Tests that list's length matches expected value.
@@ -310,7 +310,7 @@ TEST_F(DeletionTestWithExistingNodes, DeletesItems)
 
 DynamicTest::DynamicTest(string name) : name{ name }
 {
-	linkedList = new LinkedList<string>{};
+	linkedList = LinkedList<string>{};
 }
 
 string DynamicTest::prompt(string question)

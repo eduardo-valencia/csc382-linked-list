@@ -4,18 +4,18 @@ template <typename Data>
 class Node
 {
 private:
-	Data* data;
+	Data data;
 
 public:
 	Node* previous;
 
 	Node* next;
 
-	Node(Data* data);
+	Node(Data data);
 
 	Data* getData();
 
-	void setData(Data* data);
+	void setData(Data data);
 
 	Node* getPrevious();
 

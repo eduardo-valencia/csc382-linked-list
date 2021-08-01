@@ -15,7 +15,7 @@ public:
 
 	Node<Data>* Find(Data* data);
 
-	void Insert(Data* data);
+	void Insert(Data data);
 
 	void Delete(Node<Data>* node);
 };

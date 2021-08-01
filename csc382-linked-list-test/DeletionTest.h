@@ -4,7 +4,7 @@
 
 using namespace std;
 
-class DeletionTest : DynamicTest
+class DynamicDeletionTest : DynamicTest
 {
 	void testOperation()
 	{
