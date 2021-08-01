@@ -93,7 +93,7 @@ void LinkedList<Data>::Delete(Node<Data>* node)
 {
 	Node<Data>* previousNode = node->getPrevious();
 	Node<Data>* nextNode = node->getNext();
-	previousNode->next = nextNode;
+	previousNode->next = new Node<Data>{ nextNode->getData() };
 	previousNode->next->previous = previousNode;
 	delete node;
 }
@@ -192,10 +192,11 @@ struct DeletionTest : LinkedListTest
 		EXPECT_EQ(length, testData.size() - 1);
 	}
 
-	void testItemWasDeleted(Node<int>* node)
+	void testItemWasDeleted(int* data)
 	{
 		testLength();
-		Node<int>* match = linkedList->find(node->getData());
+
+		Node<int>* match = linkedList->find(data);
 		EXPECT_EQ(match, nullptr);
 	}
 };
@@ -226,8 +227,9 @@ TEST_F(FindTest, FindsDataAndReturnsNode)
 TEST_F(DeletionTest, DeletesItems)
 {
 	Node<int>* nodeToDelete = linkedList->getHead()->getNext();
+	int nodeData = *nodeToDelete->getData();
 	linkedList->Delete(nodeToDelete);
-	testItemWasDeleted(nodeToDelete);
+	testItemWasDeleted(&nodeData);
 }
 
 //TEST_F(LinkedListTest, HasHead)
