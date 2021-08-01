@@ -127,7 +127,10 @@ struct LinkedListTest : testing::Test
 		while (currentNode->getNext() != nullptr)
 		{
 			currentNode = currentNode->getNext();
+			if (currentNode->getNext() != nullptr)
+			{
 			++length;
+			}
 		}
 		return length;
 	}
