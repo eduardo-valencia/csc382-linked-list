@@ -179,6 +179,27 @@ struct InsertionTest : LinkedListTest
 	}
 };
 
+struct DeletionTest : LinkedListTest
+{
+	DeletionTest() : LinkedListTest(testData)
+	{
+
+	}
+
+	void testLength()
+	{
+		int length = getLength();
+		EXPECT_EQ(length, testData.size() - 1);
+	}
+
+	void testItemWasDeleted(Node<int>* node)
+	{
+		testLength();
+		Node<int>* match = linkedList->find(node->getData());
+		EXPECT_EQ(match, nullptr);
+	}
+};
+
 //TEST(Nodes, ShouldLinkToNextNode)
 //{
 //	int node1Data = 1;
@@ -200,6 +221,13 @@ TEST_F(InsertionTest, InsertsItem)
 TEST_F(FindTest, FindsDataAndReturnsNode)
 {
 	testDataFound(&(testData[1]));
+}
+
+TEST_F(DeletionTest, DeletesItems)
+{
+	Node<int>* nodeToDelete = linkedList->getHead()->getNext();
+	linkedList->Delete(nodeToDelete);
+	testItemWasDeleted(nodeToDelete);
 }
 
 //TEST_F(LinkedListTest, HasHead)
