@@ -1,7 +1,7 @@
 #include "pch.h"
 #include <gtest/gtest.h>
 #include "algorithm"
-#include "../csc382-linked-list-2/LinkedList.h"
+#include "LinkedList.h"
 
 using namespace std;
 
