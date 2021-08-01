@@ -362,21 +362,7 @@ void DynamicTest::startTest()
 	testOperation();
 }
 
-//class TestDynamicTest : public DynamicTest
-//{
-//public:
-//	TestDynamicTest() : DynamicTest("Testing the dynamic test")
-//	{
-//
-//	}
-//
-//	void testOperation()
-//	{
-//		cout << "Testing successful.\n";
-//	}
-//};
-
-DynamicFindTest::DynamicFindTest() : DynamicTest("find test")
+DynamicFindTest::DynamicFindTest() : DynamicTest("find")
 {
 
 }
@@ -387,11 +373,30 @@ void DynamicFindTest::testOperation()
 	showWhetherItemWasFound(letterToFind);
 }
 
+DynamicDeletionTest::DynamicDeletionTest() : DynamicTest("deletion")
+{
+
+}
+
+void DynamicDeletionTest::testOperation()
+{
+	string letterToDelete = prompt("What letter do you want to delete?");
+	Node<string>* match = linkedList.Find(&letterToDelete);
+	showWhetherItemWasFound(match);
+	if (match == nullptr)
+	{
+		cout << "Invalid item to delete.";
+		return;
+	}
+	linkedList.Delete(match);
+	showWhetherItemWasFound(match);
+}
+
 int main()
 {
-	/*TestDynamicTest testDynamicTest{};
-	testDynamicTest.startTest();*/
 	DynamicFindTest findTest{};
 	findTest.startTest();
+	DynamicDeletionTest deletionTest{};
+	deletionTest.startTest();
 	return 0;
 }
