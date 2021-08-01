@@ -1,3 +1,7 @@
+// Defines the a doubly linked list.
+// Uses Google Test
+// Data is a generic type that the LinkedList's nodes will store.
+
 #include "pch.h"
 #include <gtest/gtest.h>
 #include "algorithm"
@@ -5,48 +9,58 @@
 
 using namespace std;
 
+// Node's constructor.
+// Takes a pointer to data and instantiates the data, next, and previous properties.
 template <typename Data>
 Node<Data>::Node(Data* data) : data{ data }, next{ nullptr }, previous{ nullptr }
 {
 
 }
 
+// Returns a pointer to the data.
 template <typename Data>
 Data* Node<Data>::getData()
 {
 	return data;
 }
 
+// Sets the data using a pointer.
 template <typename Data>
 void Node<Data>::setData(Data* newData)
 {
 	data = newData;
 }
 
+// Gets the next node in the list.
 template <typename Data>
 Node<Data>* Node<Data>::getNext()
 {
 	return next;
 }
 
+// Sets the next node in the list.
 template <typename Data>
 void Node<Data>::setNext(Node<Data>* newNode)
 {
 	next = newNode;
 }
 
+// Gets previous node in the list.
 template <typename Data>
 Node<Data>* Node<Data>::getPrevious()
 {
 	return previous;
 }
 
+// Sets the previous node in the list.
 template <typename Data>
 void Node<Data>::setPrevious(Node<Data>* newNode)
 {
 	previous = newNode;
 }
 
+// LinkedList's constructor.
+// Creates an empty head and tail node.
 template <typename Data>
 LinkedList<Data>::LinkedList()
 {
@@ -56,12 +70,16 @@ LinkedList<Data>::LinkedList()
 	tail->previous = head;
 }
 
+// Returns list's head
 template <typename Data>
 Node<Data>* LinkedList<Data>::getHead()
 {
 	return head;
 }
 
+// Finds a node, given a pointer to data.
+// Compare the data values, and not the pointers themselves.
+// Returns either a null pointer or a pointer to the found node.
 template <typename Data>
 Node<Data>* LinkedList<Data>::Find(Data* data)
 {
@@ -78,6 +96,8 @@ Node<Data>* LinkedList<Data>::Find(Data* data)
 	return nullptr;
 }
 
+// Inserts data, given a pointer to data.
+// Creates a new node for the data and adds it to the end of the list.
 template <typename Data>
 void LinkedList<Data>::Insert(Data* data)
 {
@@ -88,6 +108,8 @@ void LinkedList<Data>::Insert(Data* data)
 	tail->previous = lastNode->next;
 }
 
+// Takes a pointer to a node and deletes the node from the list.
+// Links the node's previous and next nodes together.
 template <typename Data>
 void LinkedList<Data>::Delete(Node<Data>* node)
 {
@@ -99,22 +121,28 @@ void LinkedList<Data>::Delete(Node<Data>* node)
 }
 
 // From https:\/\/www.youtube.com/watch?v=16FI1-d2P4E
+// A test structure with helper methods for testing the linked list.
+// Has a linkedList property, which is the list that we will test.
+// Contains nodeData for data that should be inserted before the test.
 struct LinkedListTest : testing::Test
 {
 	LinkedList<int>* linkedList;
 	vector<int> nodeData;
 
+	// Constructor to instantiate properties
 	LinkedListTest()
 	{
 		linkedList = new LinkedList<int>{};
 		nodeData = vector<int>{};
 	}
 
+	// Destructor
 	~LinkedListTest()
 	{
 		delete linkedList;
 	}
 
+	// Inserts all data from nodeData into the linked list
 	void insertNodeData()
 	{
 		vector<int>::iterator currentInt = nodeData.begin();
@@ -125,6 +153,7 @@ struct LinkedListTest : testing::Test
 		}
 	}
 
+	// Returns length of the linked list
 	int getLength()
 	{
 		int length = 0;
@@ -140,6 +169,7 @@ struct LinkedListTest : testing::Test
 		return length;
 	}
 
+	// Tests that the given data pointer's exists in the list and that the given data matches the found data.
 	void testDataFound(int* data)
 	{
 		Node<int>* foundNode = linkedList->Find(data);
@@ -148,6 +178,7 @@ struct LinkedListTest : testing::Test
 	}
 };
 
+// Provides utility methods for testing the find operation
 struct FindTest : LinkedListTest
 {
 	FindTest() : LinkedListTest()
@@ -155,6 +186,7 @@ struct FindTest : LinkedListTest
 
 	}
 
+	// Tests that data is not in the list.
 	void testDataNotFound(int* data)
 	{
 		Node<int>* foundNode = linkedList->Find(data);
@@ -162,6 +194,8 @@ struct FindTest : LinkedListTest
 	}
 };
 
+// Provides utility methods for testing insertions
+// Defines itemToInsert as default number to insert during testing
 struct InsertionTest : LinkedListTest
 {
 	int itemToInsert;
@@ -171,17 +205,21 @@ struct InsertionTest : LinkedListTest
 
 	}
 
+	// Inserts the default number to insert
 	void insertInteger()
 	{
 		linkedList->Insert(&itemToInsert);
 	}
 
+	// Tests that list's length matches expected value.
+	// Expected size calculated from node data
 	void testLength()
 	{
 		int length = getLength();
 		EXPECT_EQ(length, nodeData.size() + 1);
 	}
 
+	// Tests that data is in the list and that list size increased
 	void testItemWasInserted(int data)
 	{
 		testDataFound(&data);
@@ -189,6 +227,7 @@ struct InsertionTest : LinkedListTest
 	}
 };
 
+// Provides utility methods for testing deletions
 struct DeletionTest : LinkedListTest
 {
 	DeletionTest()
@@ -196,23 +235,27 @@ struct DeletionTest : LinkedListTest
 
 	}
 
+	// Tests that the length decreased
 	void testLength()
 	{
 		int length = getLength();
 		EXPECT_EQ(length, nodeData.size() - 1);
 	}
 
+	// Tests length decreased and that item was not found in list
 	void testItemWasDeleted(int* data)
 	{
 		testLength();
-
 		Node<int>* match = linkedList->Find(data);
 		EXPECT_EQ(match, nullptr);
 	}
 };
 
+// Like DeletionTest struct, but also inserts some nodes by default.
 struct DeletionTestWithExistingNodes : DeletionTest
 {
+	// Constructor
+	// Adds node data for testing, then inserts node data into linked list.
 	DeletionTestWithExistingNodes()
 	{
 		nodeData.push_back(1);
@@ -222,12 +265,14 @@ struct DeletionTestWithExistingNodes : DeletionTest
 	}
 };
 
+// Tests item was inserted
 TEST_F(InsertionTest, InsertsItem)
 {
 	insertInteger();
 	testItemWasInserted(itemToInsert);
 }
 
+// Tests item was inserted when nodes already exist
 TEST_F(InsertionTest, InsertsItemWhenNodesExist)
 {
 	nodeData.push_back(2);
@@ -236,6 +281,7 @@ TEST_F(InsertionTest, InsertsItemWhenNodesExist)
 	testItemWasInserted(itemToInsert);
 }
 
+// Tests find operation returns pointer to node
 TEST_F(FindTest, FindsDataAndReturnsNode)
 {
 	nodeData.push_back(2);
@@ -243,12 +289,14 @@ TEST_F(FindTest, FindsDataAndReturnsNode)
 	testDataFound(&(nodeData[0]));
 }
 
+// Tests find returns null pointer when data does not exist.
 TEST_F(FindTest, ReturnsNullPointerWhenItemDoesNotExist)
 {
 	int numberToFind = 100;
 	testDataNotFound(&numberToFind);
 }
 
+// Tests deletion operation deletes a specific node, and only that node.
 TEST_F(DeletionTestWithExistingNodes, DeletesItems)
 {
 	Node<int>* nodeToDelete = linkedList->getHead()->getNext();
@@ -256,8 +304,3 @@ TEST_F(DeletionTestWithExistingNodes, DeletesItems)
 	linkedList->Delete(nodeToDelete);
 	testItemWasDeleted(&nodeData);
 }
-
-//TEST_F(DeletionTestWithExistingNodes, DoesNotDeleteAnythingWhenDataNotFound)
-//{
-//	Node<int>
-//}
