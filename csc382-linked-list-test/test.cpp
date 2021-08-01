@@ -6,6 +6,9 @@
 #include <gtest/gtest.h>
 #include "algorithm"
 #include "LinkedList.h"
+#include "DynamicTest.h"
+#include "DeletionTest.h"
+#include "FindTest.h"
 
 using namespace std;
 
@@ -305,12 +308,21 @@ TEST_F(DeletionTestWithExistingNodes, DeletesItems)
 	testItemWasDeleted(&nodeData);
 }
 
-class DynamicTest
+DynamicTest::DynamicTest(string name) : name{ name }
 {
-private:
-	LinkedList<string> linkedList;
-	string name;
+	linkedList = new LinkedList<string>{};
+}
 
-public:
-	DynamicTest(string name) : name{ name }
-};
+string DynamicTest::prompt(string question)
+{
+	cout << question << endl;
+	string answer;
+	cin >> answer;
+	return answer;
+}
+
+void DynamicTest::promptUserToInsertDataItem(bool& shouldContinue)
+{
+	string itemToInsert = prompt("What letter do you want to insert?");
+	linkedList.Insert(itemToInsert);
+}

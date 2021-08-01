@@ -35,6 +35,7 @@
   <ItemGroup>
     <ClInclude Include="FindTest.h" />
     <ClInclude Include="DynamicTest.h" />
+    <ClInclude Include="DeletionTest.h" />
     <ClInclude Include="LinkedList.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="pch.h" />

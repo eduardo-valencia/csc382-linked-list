@@ -7,8 +7,10 @@ using namespace std;
 class DynamicTest
 {
 private:
-	LinkedList<string> linkedList;
 	string name;
+
+protected:
+	LinkedList<string> linkedList;
 
 public:
 	DynamicTest(string name);
@@ -22,6 +24,8 @@ public:
 	void virtual testOperation();
 
 	Node<string>* promptUserToFindItem();
+
+	Node<string>* showWhetherItemWasFound(Node<string>* item);
 
 	static void startTest();
 };
