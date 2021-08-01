@@ -324,4 +324,61 @@ void DynamicTest::promptUserToInsertDataItem(bool& shouldContinue)
 {
 	string itemToInsert = prompt("What letter do you want to insert?");
 	linkedList.Insert(itemToInsert);
+	string shouldContinueAnswer = prompt("Do you want to insert another item? (yes/no)");
+	shouldContinue = shouldContinueAnswer == "yes";
+}
+
+void DynamicTest::promptUserToInsertData()
+{
+	bool shouldContinue = true;
+	while (shouldContinue)
+	{
+		promptUserToInsertDataItem(shouldContinue);
+	}
+}
+
+Node<string>* DynamicTest::promptUserToFindItem()
+{
+	string letterToFind = prompt("Type in the letter to find.");
+	return linkedList.Find(&letterToFind);
+}
+
+void DynamicTest::showWhetherItemWasFound(Node<string>* item)
+{
+	if (item == nullptr)
+	{
+		cout << "Item not found\n";
+	}
+	else
+	{
+		cout << "Item found.\n";
+	}
+}
+
+void DynamicTest::startTest()
+{
+	cout << "Beginning test " << name << endl;
+	promptUserToInsertData();
+	testOperation();
+}
+
+//class TestDynamicTest : public DynamicTest
+//{
+//public:
+//	TestDynamicTest() : DynamicTest("Testing the dynamic test")
+//	{
+//
+//	}
+//
+//	void testOperation()
+//	{
+//		cout << "Testing successful.\n";
+//	}
+//};
+
+int main()
+{
+	/*TestDynamicTest testDynamicTest{};
+	testDynamicTest.startTest();*/
+	return 0;
 }

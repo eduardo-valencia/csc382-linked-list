@@ -21,11 +21,11 @@ public:
 
 	void promptUserToInsertData();
 
-	void virtual testOperation();
+	void virtual testOperation() = 0;
 
 	Node<string>* promptUserToFindItem();
 
-	Node<string>* showWhetherItemWasFound(Node<string>* item);
+	void showWhetherItemWasFound(Node<string>* item);
 
-	static void startTest();
+	void startTest();
 };

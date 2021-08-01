@@ -9,7 +9,8 @@ class DynamicDeletionTest : DynamicTest
 	void testOperation()
 	{
 		string letterToDelete = prompt("What letter do you want to delete?");
-		Node<string>* match = showWhetherItemWasFound(match);
+		Node<string>* match = linkedList.Find(&letterToDelete);
+		showWhetherItemWasFound(match);
 		if (match == nullptr)
 		{
 			cout << "Invalid item to delete.";
