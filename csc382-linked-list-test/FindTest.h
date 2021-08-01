@@ -4,7 +4,7 @@
 
 using namespace std;
 
-class FindTest : DynamicTest
+class DynamicFindTest : DynamicTest
 {
 	void testOperation()
 	{

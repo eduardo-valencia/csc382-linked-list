@@ -24,7 +24,7 @@ Node<Data>::Node(Data data) : data{ data }, next{ nullptr }, previous{ nullptr }
 template <typename Data>
 Data* Node<Data>::getData()
 {
-	return data;
+	return &data;
 }
 
 // Sets the data using a pointer.
@@ -65,10 +65,10 @@ void Node<Data>::setPrevious(Node<Data>* newNode)
 // LinkedList's constructor.
 // Creates an empty head and tail node.
 template <typename Data>
-LinkedList<Data>::LinkedList()
+LinkedList<Data>::LinkedList(Data defaultValue)
 {
-	head = new Node<Data>{ nullptr };
-	tail = new Node<Data>{ nullptr };
+	head = new Node<Data>{defaultValue};
+	tail = new Node<Data>{defaultValue};
 	head->next = tail;
 	tail->previous = head;
 }
@@ -135,7 +135,7 @@ struct LinkedListTest : testing::Test
 	// Constructor to instantiate properties
 	LinkedListTest()
 	{
-		linkedList = new LinkedList<int>{};
+		linkedList = new LinkedList<int>{0};
 		nodeData = vector<int>{};
 	}
 
@@ -308,9 +308,8 @@ TEST_F(DeletionTestWithExistingNodes, DeletesItems)
 	testItemWasDeleted(&nodeData);
 }
 
-DynamicTest::DynamicTest(string name) : name{ name }
+DynamicTest::DynamicTest(string name) : name{ name }, linkedList{LinkedList<string>{""}}
 {
-	linkedList = LinkedList<string>{};
 }
 
 string DynamicTest::prompt(string question)

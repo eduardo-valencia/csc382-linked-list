@@ -9,7 +9,7 @@ private:
 	Node<Data>* tail;
 
 public:
-	LinkedList();
+	LinkedList(Data defaultValue);
 
 	Node<Data>* getHead();
 
