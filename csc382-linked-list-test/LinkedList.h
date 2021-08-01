@@ -13,9 +13,9 @@ public:
 
 	Node<Data>* getHead();
 
-	Node<Data>* find(Data* data);
+	Node<Data>* Find(Data* data);
 
-	void insert(Data* data);
+	void Insert(Data* data);
 
 	void Delete(Node<Data>* node);
 };

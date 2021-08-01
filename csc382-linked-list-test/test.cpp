@@ -63,7 +63,7 @@ Node<Data>* LinkedList<Data>::getHead()
 }
 
 template <typename Data>
-Node<Data>* LinkedList<Data>::find(Data* data)
+Node<Data>* LinkedList<Data>::Find(Data* data)
 {
 	Node<Data>* currentNode = getHead();
 	while (currentNode->getNext() != nullptr)
@@ -79,7 +79,7 @@ Node<Data>* LinkedList<Data>::find(Data* data)
 }
 
 template <typename Data>
-void LinkedList<Data>::insert(Data* data)
+void LinkedList<Data>::Insert(Data* data)
 {
 	Node<Data>* lastNode = tail->getPrevious();
 	lastNode->next = new Node<Data>{ data };
@@ -110,7 +110,7 @@ struct LinkedListTest : testing::Test
 		vector<int>::iterator currentInt = newNodeData.begin();
 		for (vector<int>::iterator currentInt = newNodeData.begin(); currentInt != newNodeData.end(); ++currentInt)
 		{
-			linkedList->insert(&*currentInt);
+			linkedList->Insert(&*currentInt);
 
 		}
 	}
@@ -137,7 +137,7 @@ struct LinkedListTest : testing::Test
 
 	void testDataFound(int* data)
 	{
-		Node<int>* foundNode = linkedList->find(data);
+		Node<int>* foundNode = linkedList->Find(data);
 		EXPECT_TRUE(foundNode != nullptr);
 		EXPECT_EQ(*foundNode->getData(), *data);
 	}
@@ -154,7 +154,7 @@ struct FindTest : LinkedListTest
 
 	void testDataNotFound(int* data)
 	{
-		Node<int>* foundNode = linkedList->find(data);
+		Node<int>* foundNode = linkedList->Find(data);
 		EXPECT_EQ(foundNode, nullptr);
 	}
 };
@@ -196,7 +196,7 @@ struct DeletionTest : LinkedListTest
 	{
 		testLength();
 
-		Node<int>* match = linkedList->find(data);
+		Node<int>* match = linkedList->Find(data);
 		EXPECT_EQ(match, nullptr);
 	}
 };
@@ -204,7 +204,7 @@ struct DeletionTest : LinkedListTest
 TEST_F(InsertionTest, InsertsItem)
 {
 	int newItem = 100;
-	linkedList->insert(&newItem);
+	linkedList->Insert(&newItem);
 	testItemWasInserted(newItem);
 }
 
