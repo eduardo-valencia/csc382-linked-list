@@ -1,5 +1,7 @@
-// Defines the a doubly linked list.
-// Uses Google Test
+// Defines the doubly linked list.
+// Uses Google Test Framework.
+// Run the code to test it dynamically.
+
 // Data is a generic type that the LinkedList's nodes will store.
 
 #include "pch.h"
